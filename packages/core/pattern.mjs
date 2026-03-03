@@ -2363,7 +2363,7 @@ export const { juxBy, juxby } = register(['juxBy', 'juxby'], function (by, func,
 export const { juxFlipBy, juxflipby, fluxBy, fluxby } = register(
   ['juxFlipBy', 'juxflipby', 'fluxBy', 'fluxby'],
   function (by, func, pat) {
-    return slowcat(pat._juxBy(by, func, pat), pat._juxBy(-by, func, pat));
+    return pat.juxBy(slowcat(by, -by), func);
   },
 );
 
