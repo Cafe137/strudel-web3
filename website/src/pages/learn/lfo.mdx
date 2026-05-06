@@ -12,6 +12,13 @@ A low frequency oscillator (or short LFO) is a common way on synthesizers to con
 
 This documentation is an interactive version of glossing's tutorial https://www.youtube.com/watch?v=11frBA9L638
 
+## Signals vs LFOs
+
+In Strudel, there are two ways to modulate:
+
+1. [signals](/learn/signals/) for pattern-level modulation
+2. `lfo` (this page) for audio-level modulation
+
 ## Applying an LFO
 
 Here, the LFO will change the frequency of the `saw`. Put a comment like this `//.lfo()` to see and hear how it changes, and remove the comment again.
@@ -292,3 +299,4 @@ s("saw").lpf(400).gain(0.8)
   .lfo({s: 4, dr:2, c:"gain"})
 .lfo({s: 0.3, sc: "skew"})`}
 />
+
