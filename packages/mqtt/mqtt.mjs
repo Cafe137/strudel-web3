@@ -61,7 +61,6 @@ Pattern.prototype.mqtt = function (
     const props = {
       onSuccess: onConnect,
       onFailure: onFailure,
-      useSSL: true,
     };
 
     if (username) {
