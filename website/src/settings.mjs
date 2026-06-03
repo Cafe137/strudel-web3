@@ -67,7 +67,7 @@ export const defaultSettings = {
   isCSSAnimationDisabled: false,
   maxPolyphony: 128,
   multiChannelOrbits: false,
-  includePrebakeScriptInShare: true,
+  includePrebakeScriptInShare: false,
   settingsTab: 'settings',
 };
 
