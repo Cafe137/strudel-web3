@@ -122,7 +122,7 @@ export function Footer({ context, isEmbedded = false }) {
 }
 
 function MainMenu({ context, isEmbedded = false, className }) {
-  const { started, pending, isDirty, activeCode, handleTogglePlay, handleEvaluate, handleShare } = context;
+  const { started, pending, isDirty, activeCode, handleTogglePlay, handleEvaluate, handleShare, handleImport } = context;
   const { isCSSAnimationDisabled } = useSettings();
   return (
     <div className={cx('flex text-sm max-w-full shrink-0 overflow-hidden text-foreground px-2 h-10', className)}>
@@ -150,6 +150,15 @@ function MainMenu({ context, isEmbedded = false, className }) {
           onClick={handleShare}
         >
           <span>share</span>
+        </button>
+      )}
+      {!isEmbedded && (
+        <button
+          title="import from Swarm"
+          className={cx('cursor-pointer hover:opacity-50 flex items-center space-x-1 px-2')}
+          onClick={handleImport}
+        >
+          <span>import</span>
         </button>
       )}
       {!isEmbedded && (

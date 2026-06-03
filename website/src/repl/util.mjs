@@ -160,19 +160,41 @@ export function confirmAndReloadPage(onSuccess) {
 
 export async function shareCode(codeToShare) {
   try {
-    const hash = '#' + code2hash(codeToShare);
-    const shareUrl = window.location.origin + window.location.pathname + hash;
-    if (isTauri()) {
-      await writeText(shareUrl);
-    } else {
-      await navigator.clipboard.writeText(shareUrl);
+    const response = await fetch('https://bzz.limo/bzz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: codeToShare,
+    });
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.status}`);
     }
-    const message = `Link copied to clipboard!`;
+    const data = await response.json();
+    const swarmUrl = `https://bzz.limo/bzz/${data.reference}/`;
+    if (isTauri()) {
+      await writeText(swarmUrl);
+    } else {
+      await navigator.clipboard.writeText(swarmUrl);
+    }
+    const message = `Link copied to clipboard: ${swarmUrl}`;
     alert(message);
     logger(message, 'highlight');
   } catch (e) {
     console.error(e);
+    logger(`Share failed: ${e.message}`, 'error');
   }
+}
+
+export async function importFromSwarm(input) {
+  let hash = input.trim();
+  const match = hash.match(/bzz\/([a-fA-F0-9]+)/);
+  if (match) {
+    hash = match[1];
+  }
+  const response = await fetch(`https://bzz.limo/bzz/${hash}/`);
+  if (!response.ok) {
+    throw new Error(`Fetch failed: ${response.status}`);
+  }
+  return response.text();
 }
 
 export const isIframe = () => window.location !== window.parent.location;

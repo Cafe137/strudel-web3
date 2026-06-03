@@ -34,7 +34,7 @@ import { superdirtOutput } from '@strudel/osc/superdirtoutput';
 import { audioEngineTargets } from '../settings.mjs';
 import { useStore } from '@nanostores/react';
 import { prebake } from './prebake.mjs';
-import { getRandomTune, initCode, loadModules, shareCode } from './util.mjs';
+import { getRandomTune, importFromSwarm, initCode, loadModules, shareCode } from './util.mjs';
 import './Repl.css';
 import { setInterval, clearInterval } from 'worker-timers';
 import { getMetadata } from '../metadata_parser';
@@ -260,6 +260,21 @@ export function useReplContext() {
     }
     shareCode(code);
   };
+
+  const handleImport = async () => {
+    const input = prompt('Enter a Swarm hash or bzz.limo URL:');
+    if (!input) return;
+    try {
+      const code = await importFromSwarm(input);
+      await resetEditor();
+      editorRef.current.setCode(code);
+      editorRef.current.repl.evaluate(code);
+    } catch (e) {
+      console.error(e);
+      alert(`Import failed: ${e.message}`);
+    }
+  };
+
   const context = {
     started,
     pending,
@@ -269,6 +284,7 @@ export function useReplContext() {
     handleUpdate,
     handleShuffle,
     handleShare,
+    handleImport,
     handleEvaluate,
     handleExport,
     init,
