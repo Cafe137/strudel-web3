@@ -23,9 +23,18 @@ export async function initCode() {
   // load code from url hash (either short hash from database or decode long hash)
   try {
     const initialUrl = window.location.href;
-    const hash = initialUrl.split('?')[1]?.split('#')?.[0]?.split('&')[0];
+    const params = new URLSearchParams(initialUrl.split('?')[1]?.split('#')[0]);
+    const importParam = params.get('import');
+    const hash = !importParam && params.keys().next().value; // first param key when no import param
     const codeParam = window.location.href.split('#')[1] || '';
-    if (codeParam) {
+    if (importParam) {
+      return importFromSwarm(importParam).then((code) => {
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete('import');
+        window.history.replaceState(null, '', cleanUrl.toString());
+        return code;
+      });
+    } else if (codeParam) {
       // looking like https://strudel.cc/#ImMzIGUzIg%3D%3D (hash length depends on code length)
       return hash2code(codeParam);
     } else if (hash) {
