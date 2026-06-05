@@ -154,7 +154,7 @@ export function useReplContext() {
       } else {
         /* const { code: randomTune, name } = await getRandomTune();
         code = randomTune; */
-        code = '$: s("[bd <hh oh>]*2").bank("tr909").dec(.4)';
+        code = "samples('https://samples.livecoding.eth.limo')\n\nsound(\"bd hihat808 sd crash808\")";
         msg = `Default code has been loaded`;
       }
       editor.setCode(code);
