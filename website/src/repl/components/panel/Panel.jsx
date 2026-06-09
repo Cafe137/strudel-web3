@@ -124,8 +124,11 @@ export function Footer({ context, isEmbedded = false }) {
 function MainMenu({ context, isEmbedded = false, className }) {
   const { started, pending, isDirty, activeCode, handleTogglePlay, handleEvaluate, handleShare, handleImport } = context;
   const { isCSSAnimationDisabled } = useSettings();
+  const handleSubmit = () => {
+    window.open(`${baseNoTrailing}/submit.html`, '_blank');
+  };
   return (
-    <div className={cx('flex text-sm max-w-full shrink-0 overflow-hidden text-foreground px-2 h-10', className)}>
+  <div className={cx('flex text-sm max-w-full shrink-0 overflow-hidden text-foreground px-2 h-10', className)}>
       <button
         onClick={handleTogglePlay}
         title={started ? 'stop' : 'play'}
@@ -159,6 +162,15 @@ function MainMenu({ context, isEmbedded = false, className }) {
           onClick={handleImport}
         >
           <span>import</span>
+        </button>
+      )}
+      {!isEmbedded && (
+        <button
+          title="submit sample"
+          className={cx('cursor-pointer hover:opacity-50 flex items-center space-x-1 px-2')}
+          onClick={handleSubmit}
+        >
+          <span>submit</span>
         </button>
       )}
       {!isEmbedded && (
