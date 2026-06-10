@@ -168,6 +168,7 @@ function MainMenu({ context, isEmbedded = false, className }) {
         <button
           title="submit sample"
           className={cx('cursor-pointer hover:opacity-50 flex items-center space-x-1 px-2')}
+          style={{ color: '#F47A20' }}
           onClick={handleSubmit}
         >
           <span>submit</span>
