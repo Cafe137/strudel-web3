@@ -213,7 +213,7 @@ export function SoundsTab() {
         )}
         {!soundEntries.length && soundsFilter !== 'importSounds'
           ? search == ''
-            ? 'No sounds loaded'
+            ? 'No sounds loaded - press Play or Update to fetch samples'
             : 'No sounds found'
           : ''}
       </div>

@@ -251,7 +251,7 @@
         const { hash } = await res.json();
         setStatus('success',
           `Sample uploaded! Transaction: <a href="https://gnosisscan.io/tx/${hash}" target="_blank" rel="noopener">${hash}</a><br>` +
-          `You can close this window. Wait about a minute, then refresh Strudel to see your new sample appear in the list.`
+          `You can close this window. Wait about a minute, then press Play or Update in Strudel to see your new sample appear in the list.`
         );
         form.reset();
         setDisabled(false);
