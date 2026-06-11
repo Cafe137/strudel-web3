@@ -3,115 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Sample</title>
+  <title>Upload Sample — Strudel</title>
   <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('https://fonts.livecoding.app/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('https://fonts.livecoding.app/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 32px 16px;
-      font-family: system-ui, sans-serif;
-      font-size: 14px;
-      background: #111;
-      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 48px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: #0d0d0d;
+      color: #d4d4d4;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
     }
 
     .card {
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
+    }
+
+    .header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .brand {
+      font-size: 11px;
+      font-weight: 400;
+      color: #777;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 15px;
-      font-weight: 600;
-      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+      color: #f0f0f0;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span {
+      color: #F47A20;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #888;
+      font-weight: 400;
     }
 
     label {
       display: block;
-      font-weight: 500;
-      margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 6px;
     }
 
     .field {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     input[type="file"],
     input[type="text"] {
       display: block;
       width: 100%;
-      padding: 6px 8px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      font-size: 14px;
-      font-family: inherit;
-      background: #1e1e1e;
-      color: #e5e5e5;
+      padding: 9px 12px;
+      border: 1px solid #2e2e2e;
+      border-radius: 3px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      background: #161616;
+      color: #e0e0e0;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    input[type="text"]::placeholder {
+      color: #555;
     }
 
     input[type="text"]:focus,
     input[type="file"]:focus {
-      outline: 2px solid #F47A20;
-      outline-offset: 1px;
-      border-color: transparent;
+      outline: none;
+      border-color: #F47A20;
+      background: #191919;
+    }
+
+    input[type="file"] {
+      cursor: pointer;
+      color: #666;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 2px;
+      color: #ccc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 4px 10px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    input[type="file"]::-webkit-file-upload-button:hover {
+      background: #2a2a2a;
+      color: #f0f0f0;
     }
 
     .hint {
-      font-size: 12px;
-      color: #888;
-      margin-top: 3px;
+      font-size: 11px;
+      color: #666;
+      margin-top: 5px;
+      line-height: 1.5;
     }
 
     button {
       display: block;
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       background: #F47A20;
       color: #fff;
       border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 500;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
       cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      margin-top: 4px;
+    }
+
+    button:hover:not(:disabled) {
+      background: #ff8c35;
+    }
+
+    button:active:not(:disabled) {
+      background: #d96a15;
     }
 
     button:disabled {
-      background: #7a3d10;
-      color: #c9885c;
+      background: #2a1a0a;
+      color: #906030;
       cursor: not-allowed;
     }
 
     #status {
-      margin-top: 12px;
-      font-size: 13px;
-      min-height: 18px;
+      margin-top: 16px;
+      font-size: 12px;
+      min-height: 20px;
+      line-height: 1.6;
+      padding: 0;
     }
 
-    #status.progress { color: #aaa; }
-    #status.error    { color: #f87171; }
-    #status.success  { color: #4ade80; }
+    #status:not(:empty) {
+      padding: 10px 12px;
+      border-radius: 3px;
+    }
+
+    #status.progress {
+      color: #aaa;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+    }
+
+    #status.error {
+      color: #f87171;
+      background: #1a0d0d;
+      border: 1px solid #3a1515;
+    }
+
+    #status.success {
+      color: #4ade80;
+      background: #0d1a10;
+      border: 1px solid #153a1e;
+    }
 
     #status a {
       color: inherit;
+      word-break: break-all;
+    }
+
+    #status a:hover {
+      opacity: 0.8;
+    }
+
+    .divider {
+      height: 1px;
+      background: #1a1a1a;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
 <div class="card">
-  <h1>Upload Sample</h1>
+  <div class="header">
+    <div class="brand">Strudel</div>
+    <h1>Upload <span>Sample</span></h1>
+    <div class="subtitle">Add an audio sample to the shared library</div>
+  </div>
 
   <form id="form">
     <div class="field">
       <label for="file">Audio file</label>
       <input type="file" id="file" accept=".wav,.mp3,.ogg" required>
+      <div class="hint">.wav &nbsp;·&nbsp; .mp3 &nbsp;·&nbsp; .ogg</div>
     </div>
     <div class="field">
       <label for="name">Sample name</label>
       <input type="text" id="name" maxlength="32" required placeholder="e.g. kick">
-      <div class="hint">Lowercase letters, digits, and hyphens only — max 32 characters</div>
+      <div class="hint">Lowercase letters, digits, hyphens only &nbsp;·&nbsp; max 32 chars</div>
     </div>
     <button type="submit" id="submit">Upload</button>
   </form>
@@ -250,7 +376,7 @@
 
         const { hash } = await res.json();
         setStatus('success',
-          `Sample uploaded! Transaction: <a href="https://gnosisscan.io/tx/${hash}" target="_blank" rel="noopener">${hash}</a><br>` +
+          `Sample uploaded! Transaction: <a href="https://gnosisscan.io/tx/${hash}" target="_blank" rel="noopener">${hash}</a><br><br>` +
           `You can close this window. Wait about a minute, then press Play or Update in Strudel to see your new sample appear in the list.`
         );
         form.reset();
