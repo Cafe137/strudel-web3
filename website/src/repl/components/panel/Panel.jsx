@@ -125,7 +125,7 @@ function MainMenu({ context, isEmbedded = false, className }) {
   const { started, pending, isDirty, activeCode, handleTogglePlay, handleEvaluate, handleShare, handleImport } = context;
   const { isCSSAnimationDisabled } = useSettings();
   const handleSubmit = () => {
-    window.open(`${baseNoTrailing}/submit.html`, '_blank');
+    window.open(`https://submit.livecoding.eth.limo`, '_blank');
   };
   return (
   <div className={cx('flex text-sm max-w-full shrink-0 overflow-hidden text-foreground px-2 h-10', className)}>
